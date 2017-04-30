@@ -1,3 +1,3 @@
-angular.module('Credentials', []).config(function(){
+angular.module('Credentials', ['ngRoute']).config(function(){
   
 });

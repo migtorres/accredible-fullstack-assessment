@@ -5,13 +5,23 @@
 	
 </head>
 <body ng-app="Credentials">
-	<h1>Accredible :: Fullstack Assessment - Starter Repo</h1>
-	<p>All files within <code>./public/</code> are served as static files</p>
-	<p>The route <code><a href="/get-url?url=http://accredible.com/">/get-url?url=http://accredible.com/</a></code> runs <code>./urls.js:getUrl()</code></p>
-	<ul>
-		<li>/get-url can be a little slow, I've enabled the built in horseman caching, it's still not very quick</li>
-	</ul>
+<div ng-view></div>
+	
 </body>
 </html>
+
+<!-- Vendor -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
 <script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+
+<!-- App -->
 <script src="app/assets/javascripts/app.js"></script>
+<script src="app/assets/javascripts/routes.js"></script>
+
+<!-- Directives -->
+<script src="app/assets/javascripts/controllers/credentialIndexController.js"></script>
+
+<!-- Controllers -->
+
+<!-- Services -->
