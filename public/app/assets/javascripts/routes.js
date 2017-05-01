@@ -5,7 +5,7 @@ angular.module('Credentials').config(function($routeProvider){
     })
 
     .when('/credentials', {
-      templateUrl: "app/assets/templates/index.html",
+      templateUrl: "app/assets/templates/credentials/index.html",
       controller: "CredentialsIndexController"
     })
 });
