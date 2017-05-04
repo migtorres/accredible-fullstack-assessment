@@ -6,23 +6,28 @@ angular.module('Credentials').controller('CredentialsIndexController', function(
   $scope.isSubmitting = false;
 
   $scope.createCredential = function(url){
+    $scope.error = false
     $scope.isSubmitting = true;
-  	magentoData(url.magento);
-    $scope.magentoData.url = url.magento;
-  	$scope.credentials.push($scope.magentoData);
-    $scope.isSubmitting = false;
+  	lookUpUrl(url.magento);
+    if (!$scope.error && $scope.httpReady){
+      $scope.credentials.push($scope.magentoData);
+      $scope.magentoData.url = url.magento;
+      $scope.isSubmitting = false;
+    }
   };
 
-  function magentoData(magentoUrl){
-  	var lookupUrl = 'http://localhost:3000/get-url?url=';
-  	$http.get( lookupUrl + magentoUrl).then(successCallback, errorCallback);
+  function lookUpUrl(magentoUrl){
+  	var localUrl = 'http://localhost:3000/get-url?url=';
+  	$http.get( localUrl + magentoUrl).then(successCallback, errorCallback);
+    $scope.httpReady = false
   }
 
 	function successCallback(response){
+    $scope.httpReady = true
     var magentoHtml = response.data.html;
   	var handler = new Tautologistics.NodeHtmlParser.DefaultHandler(function (error, magentoHtml) {
   		if (error)
-      	$scope.error = error;
+      	$scope.error = true;
   		else
       	return magentoHtml;
 			});
@@ -36,9 +41,11 @@ angular.module('Credentials').controller('CredentialsIndexController', function(
 					  'status':'Verified'};
 	}
 
-	function errorCallback(error){
+	function errorCallback(){
   	//error code
-   	$scope.error = error;
+    $scope.httpReady = true
+   	$scope.error = true;
+    $scope.isSubmitting = false;
 	}
 
 	function domLastPath(selectedPath){
