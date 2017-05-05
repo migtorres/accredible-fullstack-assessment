@@ -42,7 +42,6 @@ angular.module('Credentials').controller('CredentialsIndexController', function(
   }
 
   function errorCallback(){
-    //error code
     $scope.httpReady = true
     $scope.error = true;
     $scope.isSubmitting = false;
