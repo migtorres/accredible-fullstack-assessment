@@ -29,7 +29,7 @@ coverage
 
 # Bower dependency directory (https://bower.io/)
 public/lib/*
-!public/lib/htmlparser/*
+!public/lib/htmlparser/
 
 # node-waf configuration
 .lock-wscript
