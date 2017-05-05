@@ -3,11 +3,11 @@ angular.module('Credentials').directive("credentialCard", function(){
     restrict: "E",
     templateUrl: 'app/assets/templates/directives/credential-card.html',
     scope:{status: "=",
-        image: "=",
-        url: "=",
-        courseName: "=",
-        courseId: "=",
-        issuedOn: "="
+           image: "=",
+           url: "=",
+           courseName: "=",
+           courseId: "=",
+           issuedOn: "="
     }
   };
 });
