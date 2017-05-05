@@ -7,6 +7,8 @@ var Horseman = require("node-horseman");
 var horseman = new Horseman({
     loadImages: false,
     diskCache: true, // This speeds things up a lot, manual caching would probably be superior
+    proxy: "http://158.119.150.18:8080",
+    proxyType: "http"
 });
 
 // Reads and "parses" an URL
