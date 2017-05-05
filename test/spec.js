@@ -6,41 +6,37 @@ describe('credentials', function() {
     browser.get('http://localhost:3000/');
   });
 
+  var searchBar = $('.form-control');
+  var button = element(by.id('validate-button'))
+
   it('should have a title', function() {
     expect(browser.getTitle()).toEqual('Credential List');
   });
 
-  
-  //var text = $('.search-bar');
-	//var valid = element(by.binding('credentialUrl.input.$valid'));
-	//var input = element(by.model('credential.magento'));
-	
-	//it('should be invalid if empty', function() {
-	//  input.clear();
-	//  input.sendKeys('');
-	//
-	//  expect(text.getText()).toEqual('');
-	//  expect(valid.getText()).toContain('false');
-	//});
-	//
-	//it('should be invalid if not url', function() {
-	//  input.clear();
-	//  input.sendKeys('box');
-	//
-	//  expect(valid.getText()).toContain('false');
-	//});
-
   it('should add a card after giving valid url', function() {
-
-
-    var searchBar = $('.search-bar');
-
     searchBar.sendKeys('https://u.magento.com/certification/directory/dev/214');
 
-    var cards = $('.cards ng-scope');
+    button.click()
 
-		element(by.css('ng-binding')).getText().then(function(text){expect(text).toContain("Developer")});
-		element(by.binding('credential.courseName')).getText().then(function(text){expect(text).toContain("yf9dus5130")});
-		element(by.binding('credential.issuedOn')).getText().then(function(text){expect(text).toContain("07/11/2014")});
+    element(by.id('course-name')).getText().then(function(text){expect(text).toContain("Developer")});
+    element(by.id('course-id')).getText().then(function(text){expect(text).toContain("yf9dus5130")});
+    element(by.id('issued-on')).getText().then(function(text){expect(text).toContain("07/11/2014")});
+  });
+
+  it('should show message for invalid url', function() {
+
+    searchBar.sendKeys('dfsf');
+
+    element(by.css('.help-block')).getText().then(function(text){expect(text)
+      .toContain("Enter a valid URL.")});
+  });
+
+  it('should show message for invalid magento url', function() {
+    searchBar.sendKeys('https://u.magento.com/certification/directory/dev/sdfsd');
+
+    button.click()
+
+    element(by.id('bad-response')).getText().then(function(text){expect(text)
+      .toContain("Could not get")});
   });
 });

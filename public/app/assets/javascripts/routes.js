@@ -1,3 +1,5 @@
+/*global angular*/
+
 angular.module('Credentials').config(function($routeProvider){
   $routeProvider
     .when('/', {
