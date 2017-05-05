@@ -8,17 +8,13 @@ angular.module('Credentials').controller('CredentialsIndexController', function(
   $scope.createCredential = function(url){
     $scope.error = false
     $scope.isSubmitting = true;
-  	lookUpUrl(url.magento);
-    if (!$scope.error && $scope.httpReady){
-      $scope.credentials.push($scope.magentoData);
-      $scope.magentoData.url = url.magento;
-      $scope.isSubmitting = false;
-    }
+    $scope.magentoUrl = url.magento;
+  	lookUpUrl();
   };
 
-  function lookUpUrl(magentoUrl){
+  function lookUpUrl(){
   	var localUrl = 'http://localhost:3000/get-url?url=';
-  	$http.get( localUrl + magentoUrl).then(successCallback, errorCallback);
+  	$http.get( localUrl + $scope.magentoUrl).then(successCallback, errorCallback);
     $scope.httpReady = false
   }
 
@@ -35,16 +31,25 @@ angular.module('Credentials').controller('CredentialsIndexController', function(
 		parser.parseComplete(magentoHtml);
 
 		var domBaseLocation = handler.dom[2].children[1].children[19].children[3].children[1].children[7].children[5];
-		$scope.magentoData = { 'courseName': domLastPath(domBaseLocation.children[1]),
-						'courseId': domLastPath(domBaseLocation.children[3]),
-						'issuedOn': domLastPath(domBaseLocation.children[5]),
-					  'status':'Verified'};
+		var courseName = domLastPath(domBaseLocation.children[1]).trim()
+		$scope.magentoData = { 'courseName': courseName,
+						'courseId': domLastPath(domBaseLocation.children[3]).trim(),
+						'issuedOn': domLastPath(domBaseLocation.children[5]).trim(),
+					  'status':'Verified',
+						'image': courseName + '.png',
+						'url': $scope.magentoUrl};
+		appendCredential();
 	}
 
 	function errorCallback(){
   	//error code
     $scope.httpReady = true
    	$scope.error = true;
+    $scope.isSubmitting = false;
+	}
+
+	function appendCredential(){
+		$scope.credentials.push($scope.magentoData);
     $scope.isSubmitting = false;
 	}
 
